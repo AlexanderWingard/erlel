@@ -21,7 +21,9 @@
                    (helm-build-sync-source "Matches"
                      :candidates (lambda () (erlel-grep-function name module))
                      :action (lambda (s)
-                               (seq-let (file line) (split-string s ":")
+                               (let* ((tokens (split-string s ":"))
+                                      (file (nth 0 tokens))
+                                      (line (nth 1 tokens)))
                                  (find-file file)
                                  (goto-char (point-min))
                                  (forward-line (1- (string-to-number line))))))))))))
