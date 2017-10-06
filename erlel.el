@@ -38,7 +38,9 @@
 
            ((eq what 'uses)
             (cond ((and module name)
-                   (erlel-grep "git grep -n " module ":" name " -- :/*"))
+                   (append
+                    (erlel-grep "git grep -n " name " -- :/*" module ".erl")
+                    (erlel-grep "git grep -n " module ":" name " -- :/*")))
                   ((and (eq kind 'macro))
                    (erlel-grep "git grep -n \\?" name " -- :/*"))
                   ((and (eq kind 'record))
