@@ -51,6 +51,7 @@
                           (let* ((tokens (split-string s ":"))
                                  (file (nth 0 tokens))
                                  (line (nth 1 tokens)))
+                            (ring-insert find-tag-marker-ring (point-marker))
                             (find-file file)
                             (goto-char (point-min))
                             (forward-line (1- (string-to-number line)))))))
