@@ -29,21 +29,20 @@
           (cond
            ((eq what 'definition)
             (cond ((and module name)
-                   (erlel-grep "git grep -n ^" name "\\( -- :/*" module ".erl"))
+                   (erlel-grep "git grep -n ^" name "\\( -- ':/*" module ".erl'"))
                   ((and (eq kind 'macro))
-                   (erlel-grep "git grep -n '\\-define(" name "[ ,(]' -- :/*.[eh]rl"))
+                   (erlel-grep "git grep -n '\\-define(" name "[ ,(]' -- ':/*.[eh]rl'"))
                   ((and (eq kind 'record))
-                   (erlel-grep "git grep -n '\\-record(" name "[ ,]' -- :/*.[eh]rl"))))
-
+                   (erlel-grep "git grep -n '\\-record(" name "[ ,]' -- ':/*.[eh]rl'"))))
            ((eq what 'uses)
             (cond ((and module name)
                    (append
-                    (erlel-grep "git grep -n " name " -- :/*" module ".erl")
-                    (erlel-grep "git grep -n " module ":" name " -- :/*")))
+                    (erlel-grep "git grep -n ""\\ " name "\\("" -- ':/*" module ".erl'")
+                    (erlel-grep "git grep -n -e " module ":" name " --and --not -e " "^%" " -- ':/*'")))
                   ((and (eq kind 'macro))
-                   (erlel-grep "git grep -n \\?" name " -- :/*"))
+                   (erlel-grep "git grep -n \\?" name " -- ':/*'"))
                   ((and (eq kind 'record))
-                   (erlel-grep "git grep -n '#" name "' -- :/*")))))))
+                   (erlel-grep "git grep -n '#" name "' -- ':/*'")))))))
     (if matches
         (helm :sources
               (helm-build-sync-source "Matches"
